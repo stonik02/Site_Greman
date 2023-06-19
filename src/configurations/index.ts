@@ -5,4 +5,6 @@ export default () => ({
     db_user: process.env.POSTGRES_USER,
     db_password: process.env.POSTGRES_PASSWORD,
     db_name: process.env.POSTGRES_DATABASE,
+    secret_key: process.env.SECRET_KEY,
+    expire_jwt: process.env.EXPIRE_JWT
 })

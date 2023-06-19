@@ -1,4 +1,5 @@
-import { Column, Model, Table } from "sequelize-typescript";
+import { Column, Default, HasMany, Model, Table } from "sequelize-typescript";
+import { Busket } from "src/modules/busket/model/busket.model";
 
 @Table
 export class User extends Model{
@@ -16,5 +17,19 @@ export class User extends Model{
 
     @Column
     password: string
+
+    
+    @Default(false)
+    @Column
+    active: boolean
+
+
+    @Default(false)
+    @Column
+    is_staff: boolean
+
+    @HasMany(() => Busket)
+    buskets: Busket[]
+
 
 }

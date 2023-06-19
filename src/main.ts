@@ -7,7 +7,7 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const configService = app.get(ConfigService)
-  const port = configService.get('port')
+  const port = configService.get('port') || 3000
   app.useGlobalPipes(new ValidationPipe())
 
 
@@ -18,7 +18,8 @@ async function bootstrap() {
     .addTag("API")
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('', app, document)
-  await app.listen('3000')
+  SwaggerModule.setup('swagger', app, document)
+  await app.listen(port)
+  console.log("Server start on port : " + port)
 }
 bootstrap();
