@@ -9,7 +9,8 @@ import { UpdateUserDTO } from './dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './models/users.model';
 import { JWTAuthGuard } from '../auth/jwt-guard';
-// import { JWTAuthGuard } from '../auth/jwt-guard';
+import { Roles } from '../auth/has-roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -25,6 +26,11 @@ export class UsersController {
     return this.userService.updateUser(user.email, updateDto)
   }
 
+  @Get('all')
+  allUsers(): Promise<User[]> {
+    return this.userService.allUser()
+  }
+
   @ApiResponse({status: 200, type: Boolean})
   @UseGuards(JWTAuthGuard)
   @Delete('me')
@@ -34,13 +40,14 @@ export class UsersController {
   }
 
   @ApiResponse({status: 200, type: Boolean})
-  @UseGuards(JWTAuthGuard)
+  @Roles("user")
+  @UseGuards(RolesGuard)
   @Get('me')
   async GetData(@Req() request): Promise<User>  {
     
     const user = await request.user
     console.log(user.user)
-    return this.userService.GetUser(user.user.email)
+    return this.userService.GetUser(user.email)
   }
 
   @ApiResponse({status: 200, type: UpdateUserDTO})

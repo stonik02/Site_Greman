@@ -1,4 +1,5 @@
-// import { SetMetadata } from '@nestjs/common';
-// import { Role } from '../token/model/role.enum';
+import { SetMetadata } from "@nestjs/common"
 
-// export const HasRoles = (...role: Role[]) => SetMetadata('role', role);
+export const ROLES_KEY = 'role'
+
+export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles)

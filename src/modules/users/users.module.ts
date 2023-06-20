@@ -7,10 +7,11 @@ import { TokenModule } from "../token/token.module";
 import { TokenService } from "../token/token.service";
 import { JwtService } from "@nestjs/jwt";
 import { AuthModule } from "../auth/auth.module";
+import { RolesModule } from "../roles/roles.module";
 
 
 @Module({
-    imports: [SequelizeModule.forFeature([User]), AuthModule],
+    imports: [SequelizeModule.forFeature([User]), AuthModule, RolesModule],
     controllers: [UsersController],
     providers: [UsersService, TokenService, JwtService],
     exports: [UsersService]

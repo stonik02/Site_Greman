@@ -88,15 +88,17 @@ export class AuthService {
         if(!validatePassword) {
             throw new BadRequestException(AppError.WRONG_DATA)
         }
+        console.log(existUser.role)
         const userData = {
             email: existUser.email,
             id: existUser.id,
             is_staff: existUser.is_staff,
-            active: existUser.active
+            active: existUser.active,
+            roleId: existUser.roleId
         }
         const jwtAccess = await this.tokenService.generateAccessToken(userData)
         const jwtRefresh = await this.tokenService.generateRefreshToken(userData)
         const user = await this.userService.publicUser(dto.email)
-        return {...user, jwtAccess, jwtRefresh}
+        return {jwtAccess, jwtRefresh}
     }
 }

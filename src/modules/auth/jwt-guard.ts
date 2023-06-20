@@ -19,10 +19,15 @@ export class JWTAuthGuard implements CanActivate {
             if(bearer !== 'Bearer' || !token) {
                 throw new UnauthorizedException({message: "Пользователь не авторизован"})
             }
-            const user =  this.jwtService.verifyAccessToken(token)
-            console.log(token)
-            
-            req.user = user
+            return this.jwtService.verifyAccessToken(token).then(user => {
+                req.user = user.user;
+                
+                return true
+                // return user.role.some(role => requiredRoles.includes(role.value));
+              }).catch((e) => {
+                console.log(e)
+                throw new UnauthorizedException({message: "У пользователя недостаточно прав"})
+              });
 
             return true
         } catch(e) {

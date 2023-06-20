@@ -15,14 +15,6 @@ export class AuthUserResponseDTO {
 
     @ApiProperty()
     @IsString()
-    email:string
-
-    @ApiProperty()
-    @IsString()
-    username: string
-
-    @ApiProperty()
-    @IsString()
     jwtAccess: string
 
     @ApiProperty()

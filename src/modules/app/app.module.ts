@@ -23,6 +23,8 @@ import { Order } from '../orders/model/orders.model';
 import { OrderedItem } from '../ordered_item/model/ordered_item.model';
 import { OrdersModule } from '../orders/orders.module';
 import { OrderedItemModule } from '../ordered_item/ordered_item.module';
+import { Role } from '../roles/model/model';
+import { RolesModule } from '../roles/roles.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -44,10 +46,10 @@ import { OrderedItemModule } from '../ordered_item/ordered_item.module';
       database: configService.get('db_name'),
       synchronize: true,
       autoLoadModels: true,
-      models: [User, Category, Product, Size, ProductSize, Busket, Order, OrderedItem]
+      models: [User,Role ,Category, Product, Size, ProductSize, Busket, Order, OrderedItem]
     }),
   }),
-   ProductsModule, UserModule, AuthModule, TokenModule, CategoriesModule, ProductsModule, SizeModule, FileModule, BusketModule, OrdersModule, OrderedItemModule],
+   ProductsModule, UserModule, AuthModule, TokenModule, CategoriesModule, ProductsModule, SizeModule, FileModule, BusketModule, OrdersModule, OrderedItemModule, RolesModule],
   controllers: [AppController],
   providers: [AppService],
 })
