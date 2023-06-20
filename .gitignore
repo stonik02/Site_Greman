@@ -1,7 +1,8 @@
 # compiled output
 /dist
 /node_modules
-/static/*
+.static/*
+..vscode/
 
 
 # Logs
