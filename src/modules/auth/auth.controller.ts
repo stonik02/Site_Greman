@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../users/dto';
 import { AuthUserResponseDTO, LoginUserDTO } from './dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JWTAuthGuard } from 'src/guards/jwt-guard';
 import { User } from '../users/models/users.model';
 
 @ApiTags('auth')

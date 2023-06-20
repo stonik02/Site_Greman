@@ -33,7 +33,7 @@ export class TokenService {
 
     async verifyAccessToken(token: string): Promise<any> {
         try {
-          const decoded = this.jwtService.decode(token);
+          const decoded = this.jwtService.verify(token, { secret: process.env.SECRET_KEY });
 
           return decoded;
 

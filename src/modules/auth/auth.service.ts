@@ -34,7 +34,7 @@ export class AuthService {
 
         const userData = {
             email: user.email,
-            id: user.id
+            id: user.id,
         }
         const token = await this.tokenService.generateAccessToken(userData)
 
@@ -90,7 +90,9 @@ export class AuthService {
         }
         const userData = {
             email: existUser.email,
-            id: existUser.id
+            id: existUser.id,
+            is_staff: existUser.is_staff,
+            active: existUser.active
         }
         const jwtAccess = await this.tokenService.generateAccessToken(userData)
         const jwtRefresh = await this.tokenService.generateRefreshToken(userData)

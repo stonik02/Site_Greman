@@ -6,9 +6,10 @@ import {
 
 import { UsersService } from './users.service';
 import { UpdateUserDTO } from './dto';
-import { JWTAuthGuard } from 'src/guards/jwt-guard';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './models/users.model';
+import { JWTAuthGuard } from '../auth/jwt-guard';
+// import { JWTAuthGuard } from '../auth/jwt-guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -35,9 +36,11 @@ export class UsersController {
   @ApiResponse({status: 200, type: Boolean})
   @UseGuards(JWTAuthGuard)
   @Get('me')
-  GetData(@Req() request): Promise<User>  {
-    const user = request.user
-    return this.userService.GetUser(user.email)
+  async GetData(@Req() request): Promise<User>  {
+    
+    const user = await request.user
+    console.log(user.user)
+    return this.userService.GetUser(user.user.email)
   }
 
   @ApiResponse({status: 200, type: UpdateUserDTO})

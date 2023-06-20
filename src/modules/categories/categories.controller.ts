@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JWTAuthGuard } from 'src/guards/jwt-guard';
 import { CreateCategoryDTO } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 

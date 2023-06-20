@@ -1,10 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../users/models/users.model';
 import { CreateUserDTO, UpdateUserDTO } from './dto';
 import * as bcrypt from 'bcrypt'
-import { AppError } from 'src/common/constants/errors';
-import { where } from 'sequelize';
 import { Busket } from '../busket/model/busket.model';
 import { Product } from '../products/models/product.model';
 

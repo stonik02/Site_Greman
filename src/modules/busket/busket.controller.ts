@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Param, Post, Req, UseGuards } from '@nestjs/c
 import { BusketService } from './busket.service';
 import { CreateBusketDto } from './dto';
 import { Busket } from './model/busket.model';
-import { JWTAuthGuard } from 'src/guards/jwt-guard';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JWTAuthGuard } from '../auth/jwt-guard';
 
 @ApiTags('busket')
 @Controller('busket')
