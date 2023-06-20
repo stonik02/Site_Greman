@@ -36,7 +36,7 @@ export class AuthService {
             email: user.email,
             id: user.id
         }
-        const token = await this.tokenService.generateJWT(userData, process.env.EXPRESS_IN)
+        const token = await this.tokenService.generateAccessToken(userData)
 
         const confirmLink = `${process.env.MY_URL}auth/confirm/${token}`
         console.log(user)
@@ -67,7 +67,7 @@ export class AuthService {
         const jwt = {
             secret: process.env.SECRET_KEY
         }
-        const data = await this.tokenService.verifyJWT(token)
+        const data = await this.tokenService.verifyAccessToken(token)
         console.log(data)
         const userData = data.user
         const user = await this.userService.findUserByEmail(userData.email)
@@ -92,8 +92,9 @@ export class AuthService {
             email: existUser.email,
             id: existUser.id
         }
-        const jwt = await this.tokenService.generateJWT(userData, process.env.EXPRESS_IN)
+        const jwtAccess = await this.tokenService.generateAccessToken(userData)
+        const jwtRefresh = await this.tokenService.generateRefreshToken(userData)
         const user = await this.userService.publicUser(dto.email)
-        return {...user, jwt}
+        return {...user, jwtAccess, jwtRefresh}
     }
 }

@@ -54,6 +54,11 @@ export class UsersService {
     return true
   }
 
+  async GetUser(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({where: {email}})
+    return user
+  }
+
   async myBusket(id) {
     return await this.userRepository.findOne({where: {id}, 
       include: [{ model: Busket, include: [Product] }],

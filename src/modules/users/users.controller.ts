@@ -5,9 +5,10 @@ import {
   } from '@nestjs/common';
 
 import { UsersService } from './users.service';
-import { CreateUserDTO, UpdateUserDTO } from './dto';
+import { UpdateUserDTO } from './dto';
 import { JWTAuthGuard } from 'src/guards/jwt-guard';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './models/users.model';
 
 @ApiTags('users')
 @Controller('users')
@@ -29,6 +30,14 @@ export class UsersController {
   deleteUser(@Req() request) {
     const user = request.user
     return this.userService.deleteUser(user.email)
+  }
+
+  @ApiResponse({status: 200, type: Boolean})
+  @UseGuards(JWTAuthGuard)
+  @Get('me')
+  GetData(@Req() request): Promise<User>  {
+    const user = request.user
+    return this.userService.GetUser(user.email)
   }
 
   @ApiResponse({status: 200, type: UpdateUserDTO})

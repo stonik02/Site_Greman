@@ -23,7 +23,11 @@ export class AuthUserResponseDTO {
 
     @ApiProperty()
     @IsString()
-    jwt: string
+    jwtAccess: string
+
+    @ApiProperty()
+    @IsString()
+    jwtRefresh: string
 
 }
 
