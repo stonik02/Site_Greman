@@ -1,5 +1,6 @@
 import { Column, Default, HasMany, Model, Table } from "sequelize-typescript";
 import { Busket } from "src/modules/busket/model/busket.model";
+import { Order } from "src/modules/orders/model/orders.model";
 
 @Table
 export class User extends Model{
@@ -30,6 +31,10 @@ export class User extends Model{
 
     @HasMany(() => Busket)
     buskets: Busket[]
+
+
+    @HasMany(() => Order)
+    orders: Order[]
 
 
 }

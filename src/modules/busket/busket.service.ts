@@ -30,4 +30,14 @@ export class BusketService {
             throw new BadRequestException(AppError.WRONG_DATA)
         }
     }
+
+    async getBusketsById(busketsID: number[]): Promise<Busket[]> {
+        const buckets = await this.busketRepository.findAll({where: {id : busketsID}})
+        return buckets
+    }
+
+    async deleteAllBuskets(buskets: number[]): Promise<Boolean> {
+        await this.busketRepository.destroy({where: {id: buskets}})
+        return true
+    }
 }

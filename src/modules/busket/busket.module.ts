@@ -7,6 +7,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 @Module({
     providers: [BusketService],
     controllers: [BusketController],
-    imports: [SequelizeModule.forFeature([Busket])]
+    imports: [SequelizeModule.forFeature([Busket])],
+    exports: [BusketService]
 })
 export class BusketModule {}
