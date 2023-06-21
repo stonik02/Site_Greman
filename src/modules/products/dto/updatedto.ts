@@ -1,29 +1,32 @@
 import { ApiProperty } from "@nestjs/swagger"
+import { IsOptional } from "class-validator"
 import { BelongsToMany, ForeignKey } from "sequelize-typescript"
 import { ProductSize, Size } from "src/modules/size/model/size.model"
 
 export class UpdateProductDto{
     @ApiProperty()
-    // @IsOptional()
+    @IsOptional()
     name: string
 
     @ApiProperty()
-    // @IsOptional()
+    @IsOptional()
     description: string
 
 
     @ApiProperty()
-    // @IsOptional()
+    @IsOptional()
     price: string
 
     @ApiProperty()
-    // @IsOptional()
+    @IsOptional()
     image:string
 
 
     @ApiProperty()
-    // @IsOptional()
+    @IsOptional()
     category: string
+
+    
     
     @BelongsToMany(() => Size, ()=> ProductSize)
     size?: Size[]
