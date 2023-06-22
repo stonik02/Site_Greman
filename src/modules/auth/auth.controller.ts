@@ -13,7 +13,7 @@ export class AuthController {
 
     @ApiResponse({status: 201, type: CreateUserDTO})
     @Post('register')
-    register(@Body() dto: CreateUserDTO): Promise<CreateUserDTO>{
+    register(@Body() dto: CreateUserDTO): Promise<User>{
         return this.authService.registerUsers(dto)
     }
 
@@ -24,7 +24,7 @@ export class AuthController {
     }
 
     @Get('confirm/:token')
-    @Redirect('https://google.com') // После активации сделать переход на страницу авторизации на фронте
+    @Redirect('http://localhost:8080/auth') // После активации сделать переход на страницу авторизации на фронте
     confirm(@Param('token') token): Promise<User> {
         return this.authService.confirm(token)
     }

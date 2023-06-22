@@ -1,7 +1,6 @@
 
-import { BelongsTo, BelongsToMany, Column, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Busket } from "src/modules/busket/model/busket.model";
-import { OrderedItem } from "src/modules/ordered_item/model/ordered_item.model";
 import { Product } from "src/modules/products/models/product.model";
 
 @Table
@@ -15,12 +14,6 @@ export class Size extends Model{
 
     @HasMany(() => Busket)
     buskets: Busket[]
-
-    @HasMany(() => OrderedItem)
-    orderedItem: OrderedItem[]
-
-
-
 
 }
 

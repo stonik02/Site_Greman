@@ -18,7 +18,7 @@ export class AuthService {
 		private readonly tokenService: TokenService,
 	) {}
 
-	async registerUsers(dto: CreateUserDTO): Promise<CreateUserDTO> {
+	async registerUsers(dto: CreateUserDTO): Promise<User> {
 		const existUser = await this.userService.findUserByEmail(dto.email)
 		if (existUser) {
 			throw new BadRequestException(AppError.USER_EXIST)
@@ -100,14 +100,12 @@ export class AuthService {
 		if (!existUser.active) {
 			throw new BadRequestException(AppError.NO_ACTIVATE)
 		}
-		console.log(existUser.role)
 
 		const userData = {
 			email: existUser.email,
 			id: existUser.id,
 			is_staff: existUser.is_staff,
 			active: existUser.active,
-			roleId: existUser.roleId,
 		}
 		const jwtAccess = await this.tokenService.generateAccessToken(userData)
 		const jwtRefresh = await this.tokenService.generateRefreshToken(userData)

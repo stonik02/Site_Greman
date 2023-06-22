@@ -5,20 +5,17 @@ import { CreateUserDTO, UpdateUserDTO } from './dto';
 import * as bcrypt from 'bcrypt'
 import { Busket } from '../busket/model/busket.model';
 import { Product } from '../products/models/product.model';
-import { RolesService } from '../roles/roles.service';
-import { Role } from '../roles/model/model';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User) private readonly userRepository : typeof User,
-                                  private readonly roleSerive: RolesService) {}
+  constructor(@InjectModel(User) private readonly userRepository : typeof User) {}
 
   async hashPassword(password) {
     return bcrypt.hash(password, 10)
   }
 
   async findUserByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({where: {email}, include: [{ model: Role }]})
+    return this.userRepository.findOne({where: {email}})
   }
 
   async findUserById(id: string): Promise<User> {
@@ -27,17 +24,7 @@ export class UsersService {
 
   async createUser(dto: CreateUserDTO): Promise<User> {
     dto.password = await this.hashPassword(dto.password)
-    const role = await this.roleSerive.getRoleByValue("user")
-    const newUser = {
-      firstName: dto.firstName,
-      secondName: dto.secondName,
-      username : dto.username,
-      email: dto.email,
-      password: dto.password,
-
-    }
-    const user = await this.userRepository.create(newUser)
-    user.roleId = role.id
+    const user = await this.userRepository.create({...dto})
     await user.save()
     return user
   }
@@ -72,10 +59,5 @@ export class UsersService {
     return user
   }
 
-  async myBusket(id) {
-    return await this.userRepository.findOne({where: {id}, 
-      include: [{ model: Busket, include: [Product] }],
-      attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
-    })
-  }
+
 }

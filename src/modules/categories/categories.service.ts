@@ -22,12 +22,12 @@ export class CategoriesService {
     }
 
     async getAll(): Promise<CreateCategoryDTO[]> {
-        return this.categoryRepository.findAll()
+        return await this.categoryRepository.findAll()
     }
 
     async getById(id: any): Promise<CreateCategoryDTO> {
         try {
-            const category = this.categoryRepository.findOne({where: {id}, include: [Product]})
+            const category = await this.categoryRepository.findOne({where: {id}, include: [Product]})
             return category
         } catch(e) {
             console.log(e)

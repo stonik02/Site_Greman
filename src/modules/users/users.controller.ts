@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	Param,
 	Patch,
 	Post,
 	Req,
@@ -47,8 +48,9 @@ export class UsersController {
 	}
 
 	@ApiResponse({ status: 200, type: Boolean })
-	@Roles('user')
-	@UseGuards(RolesGuard)
+	// @Roles('user')
+	// @UseGuards(RolesGuard)
+	@UseGuards(JWTAuthGuard)
 	@Get('me')
 	async GetData(@Req() request): Promise<User> {
 		const user = await request.user
@@ -56,10 +58,5 @@ export class UsersController {
 		return this.userService.GetUser(user.email)
 	}
 
-	@ApiResponse({ status: 200, type: UpdateUserDTO })
-	@UseGuards(JWTAuthGuard)
-	@Get('busket')
-	myBusket(@Req() req) {
-		return this.userService.myBusket(req.user.id)
-	}
+
 }

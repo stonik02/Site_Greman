@@ -27,8 +27,8 @@ export class ProductsService {
 			image: imgaeID,
 			category: category.id,
 		}
-		const myProduct = this.productRepository.create(newProduct)
-		return true
+		const myProduct = await this.productRepository.create(newProduct)
+		return myProduct
 	}
 
 	async getAll(): Promise<Product[]> {
@@ -90,5 +90,14 @@ export class ProductsService {
 
     async getActualProduct(): Promise<Product[]> {
         return await this.productRepository.findAll({where: {actual : true}})
+    }
+
+	async getById(id): Promise<Product> {
+        return await this.productRepository.findOne({where: {id}, include: [
+			{
+			  model: Size,
+			  attributes: ['id','size'], 
+			},
+		  ]})
     }
 }

@@ -64,4 +64,9 @@ export class ProductsController {
   getActualProduct(): Promise<Product[]> {
     return this.productsService.getActualProduct()
   }
+
+  @Get(':id')
+  getById(@Param('id') id): Promise<Product> {
+	return this.productsService.getById(id)
+  }
 }

@@ -20,11 +20,7 @@ import { FileModule } from '../file/file.module';
 import { BusketModule } from '../busket/busket.module';
 import { Busket } from '../busket/model/busket.model';
 import { Order } from '../orders/model/orders.model';
-import { OrderedItem } from '../ordered_item/model/ordered_item.model';
 import { OrdersModule } from '../orders/orders.module';
-import { OrderedItemModule } from '../ordered_item/ordered_item.module';
-import { Role } from '../roles/model/model';
-import { RolesModule } from '../roles/roles.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -46,10 +42,10 @@ import { RolesModule } from '../roles/roles.module';
       database: configService.get('db_name'),
       synchronize: true,
       autoLoadModels: true,
-      models: [User,Role ,Category, Product, Size, ProductSize, Busket, Order, OrderedItem]
+      models: [User ,Category, Product, Size, ProductSize, Busket, Order]
     }),
   }),
-   ProductsModule, UserModule, AuthModule, TokenModule, CategoriesModule, ProductsModule, SizeModule, FileModule, BusketModule, OrdersModule, OrderedItemModule, RolesModule],
+   ProductsModule, UserModule, AuthModule, TokenModule, CategoriesModule, ProductsModule, SizeModule, FileModule, BusketModule, OrdersModule],
   controllers: [AppController],
   providers: [AppService],
 })
