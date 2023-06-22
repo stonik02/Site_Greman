@@ -51,47 +51,58 @@ export class OrdersService {
 				{
 					model: Busket,
 					attributes: ['id', 'quantity', 'size'],
-					include: [{
-						model: Product,
-						attributes: ['id','name', 'price', 'image'],
-					}
-
+					include: [
+						{
+							model: Product,
+							attributes: ['id', 'name', 'price', 'image'],
+						},
 					],
 				},
 			],
 		})
-		this.sendAdminEmail(orderWithItems.busket)
+		this.sendAdminEmail(orderWithItems)
 
 		return orderWithItems
 	}
 
 	async sendAdminEmail(order): Promise<void> {
-		console.log(order)
-		const message = {
-			from: 'Чисто магазик женских трусиков <denistestfortp@mail.ru>',
-			to: 'test@mail.ru',
-			subject: 'Verify user',
-			html: `
-				<h3> Привет, ${order}! </h3>
-				<p> Перейди по ссылке чисто по братски пажэ <a href="${order}">link</a> ну бля реально перейди </p>
-				<img src="cid:0b4a9808-3baa-452e-8d06-6d1544da7980"/>
-		`,
-			// attachments: [
-			// 	{
-			// 		filename: '0b4a9808-3baa-452e-8d06-6d1544da7980.jpg', // Имя файла
-			// 		path: path.resolve(
-			// 			__dirname,
-			// 			'..',
-			// 			'..',
-			// 			'..',
-			// 			'static',
-			// 			'0b4a9808-3baa-452e-8d06-6d1544da7980.jpg',
-			// 		), // Здесь путь до файла
-			// 		cid: '0b4a9808-3baa-452e-8d06-6d1544da7980', // Уникальный идентификатор изображения
-			// 	},
-			// ],
+		console.log(order);
+		
+		const orderCity = `<li>${order.city}</li>`;
+		const orderIndex = `<li>${order.index}</li>`;
+	  
+		const orderNameItems = order.busket.map(item => `<li>${item.products.name}</li>`); // Create a separate list item for each orderName
+		const orderQuantityItems = order.busket.map(item => `<li>${item.quantity}</li>`); // Create a separate list item for each orderQuantity
+	  
+		let orderItemsHTML = '';
+		for (let i = 0; i < order.busket.length; i++) {
+		  orderItemsHTML += `
+			<ul>
+			  <li>Название товара: ${orderNameItems[i]}</li>
+			  <li>Количество товара: ${orderQuantityItems[i]}</li>
+			</ul>
+			<hr>
+		  `;
 		}
-
-		mailer(message)
-	}
+	  
+		const message = {
+		  from: 'Чисто магазик женских трусиков <denistestfortp@mail.ru>',
+		  to: 'skitlsskitlovich@gmail.com',
+		  subject: 'Verify user',
+		  html: `
+			<h1> Новый заказ! </h1>
+			<ul>
+			  <li>Город: ${orderCity}</li>
+			  <li>Индекс: ${orderIndex}</li>
+			  <h2> Список товаров:</h2>
+			  <hr>
+			</ul>
+			${orderItemsHTML}
+			<div id="body"></div>
+			<img src="cid:0b4a9808-3baa-452e-8d06-6d1544da7980"/>
+		  `,
+		};
+	  
+		mailer(message);
+	  }
 }
